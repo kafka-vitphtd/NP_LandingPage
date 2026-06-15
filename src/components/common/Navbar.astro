@@ -1,0 +1,385 @@
+---
+import Logo from '../../assets/logo/logo.png';
+---
+
+<header class="header" style="opacity: 0">
+    <div class="navbar__left">
+        <a href="/" aria-label="Nam Phương Home">
+            <img src={Logo.src} alt="Nam Phương" class="logo" />
+        </a>
+        <a href="/" class="name" aria-label="Nam Phương Home">NAM PHƯƠNG</a>
+    </div>
+    <div class="navbar__right">
+        <button class="menu" id="menu-button" aria-expanded="false" aria-label="Main Menu">
+            <span class="label-wrapper">
+                <span class="label" id="menu-label">Menu</span>
+            </span>
+            <div class="hamburger" aria-hidden="true">
+                <div class="bars">
+                    <div class="bar bar-top"></div>
+                    <div class="bar bar-mid"></div>
+                    <div class="bar bar-bottom"></div>
+                </div>
+            </div>
+        </button>
+    </div>
+</header>
+
+<style>
+    :root {
+        --header-height: 100px;
+        --header-padding: 40px;
+        --header-background: transparent;
+
+        --logo-height: 45px;
+        --component-gap: 15px;
+
+        --text-size: 25px;
+        --text-weight: var(--font-weight-bold);
+        --text-color: #ffffff;
+        --text-font: var(--font-family-display);
+
+        --bars-size: 45px;
+        --bars-gap: 6.5px;
+
+        --bar-height: 3.5px;
+        --bar-radius: 5px;
+        --bar-short-width: 15px;
+        --bar-long-width: 30px;
+    }
+
+    .header {
+        position: fixed;
+        top: 0; left: 0; right: 0;
+        
+        z-index: 200;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        
+        height: var(--header-height);
+        padding: var(--header-padding);
+        background: var(--header-background);
+    
+        user-select: none;
+        transform-origin: top center;
+        animation: fadeInHeader 0.1s ease 0.1s both;
+    }
+
+    .navbar__left {
+        display: flex;
+        align-items: center;
+        gap: var(--component-gap);
+    }
+    .logo {
+        height: var(--logo-height);
+        width: auto;
+        filter: brightness(0) invert(1); 
+
+        transform-origin: left center;
+        transform: scale(1) translateY(0px);
+        transition: 
+            filter 2s cubic-bezier(0.16, 1, 0.3, 1),
+            transform 2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .name {
+        font-size: var(--text-size);
+        font-weight: var(--text-weight);
+        font-family: var(--text-font);
+        color: var(--text-color);
+        text-decoration: none;
+
+        transform-origin: left center;
+        will-change: transform;
+        transform: scale(1) translateX(0px);
+        transition: 
+            color 2s cubic-bezier(0.16, 1, 0.3, 1),
+            transform 2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .navbar__right {
+        display: flex;
+        align-items: center;
+    }
+    .menu {
+        all: unset;
+        align-items: center;
+        gap: var(--component-gap);
+        display: flex;
+
+        cursor: pointer;
+        position: relative;
+        z-index: 300; 
+    }
+    .label-wrapper {
+        opacity: 0;
+        animation: fadeInHeader 0.8s ease 0.3s both;
+        overflow: hidden;
+        display: flex;       
+        align-items: center;
+    }
+    .label {
+        display: block;     
+        font-size: var(--text-size);
+        font-weight: var(--text-weight);
+        font-family: var(--text-font);
+        color: var(--text-color);
+        transition: 
+            transform 2s cubic-bezier(0.16, 1, 0.3, 1),
+            color 2s cubic-bezier(0.16, 1, 0.3, 1);
+
+    }
+    /* Hamburger Menu Styles */
+    .hamburger {
+        position: relative;
+        width: var(--bars-size);
+        height: var(--bars-size);
+        flex-shrink: 0;
+    }
+    .bars {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: var(--bars-gap);
+    }
+    .bar {
+        height: var(--bar-height);
+        border-radius: var(--bar-radius);
+        background: #ffffff;
+        transform-origin: center;
+        transition:
+            width 1.4s cubic-bezier(0.16, 1, 0.3, 1),
+            transform 1.4s cubic-bezier(0.16, 1, 0.3, 1),
+            opacity 1.4s ease,
+            background 3s cubic-bezier(0.16, 1, 0.3, 1),
+            color 2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .bar-top    { width: var(--bar-long-width); }
+    .bar-mid    { width: var(--bar-short-width); }
+    .bar-bottom { width: var(--bar-long-width); }
+
+    .logo, .name, .hamburger {
+        opacity: 0;
+        animation: fadeInHeader 0.8s ease 0.3s both;
+    }
+
+    .menu:not(.open):hover .bar-top    { width: var(--bar-short-width); }
+    .menu:not(.open):hover .bar-mid    { width: var(--bar-long-width); }
+    .menu:not(.open):hover .bar-bottom { width: var(--bar-short-width); } 
+
+    .menu.open .bar-top    { width: var(--bar-long-width); transform: translateY(10px) rotate(45deg); }
+    .menu.open .bar-mid    { opacity: 0; transform: scaleX(0); }
+    .menu.open .bar-bottom { width: var(--bar-long-width); transform: translateY(-10px) rotate(-45deg); }
+
+    .label.slide-up {
+        animation: slideUp 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    }
+    .label.slide-down {
+        animation: slideDown 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    }
+    .label.slide-from-top {
+        animation: slideFromTop 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    }
+    .label.slide-from-bottom {
+        animation: slideFromBottom 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    }
+
+    .header.scrolled {
+        height: 65px;
+        background: rgba(255, 255, 255, 0.08);  /* gần như transparent */
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        box-shadow: 0 2px 30px rgba(0, 0, 0, 0.05);
+    }
+    .header.scrolled .logo {
+        filter: brightness(0); 
+        transform: scale(0.92);
+    }
+
+    .header.scrolled .name {
+        color: #2a2620; 
+        transform: scale(0.92) translateX(-4px);
+    }
+
+    .header.scrolled .label {
+        color: #2a2620;
+    }
+
+    .header.scrolled .bar {
+        background: #2a2620;
+    }
+
+    @keyframes fadeInHeader {
+        to { opacity: 1; }
+    }
+
+
+    @keyframes slideUp {
+        0% {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        100% {
+            transform: translateY(-100%);
+            opacity: 0;
+        }
+    }   
+    @keyframes slideDown {
+        0% {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        100% {
+            transform: translateY(100%);
+            opacity: 0;
+        }
+    }
+    @keyframes slideFromTop {
+        0% {
+            transform: translateY(-100%);
+            opacity: 0;
+        }
+        100% {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+    @keyframes slideFromBottom {
+        0% {
+            transform: translateY(100%);
+            opacity: 0;
+        }
+        100% {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+</style>
+<script>
+    // ── Scroll Handler ──
+    const navbar = document.querySelector('.header') as HTMLElement;
+    let ticking = false;
+
+    function updateNavbar() {
+        if (window.scrollY > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            requestAnimationFrame(updateNavbar);
+            ticking = true;
+        }
+    }, { passive: true });
+
+    // ── Menu Toggle Handler ──
+    const menuButton = document.getElementById('menu-button') as HTMLButtonElement;
+    const panel   = document.getElementById('menu-dropdown') as HTMLElement;
+
+    let labelAnimationCleanup: (() => void) | null = null;
+
+    function animateLabel(
+        label: HTMLElement,
+        exitClass: string,
+        enterClass: string,
+        newText: string
+    ) {
+        if (labelAnimationCleanup) {
+            labelAnimationCleanup();
+            labelAnimationCleanup = null;
+        }
+
+        label.classList.remove('slide-up', 'slide-down', 'slide-from-top', 'slide-from-bottom');
+
+        label.classList.add(exitClass);
+
+        const onExitEnd = () => {
+            label.classList.remove(exitClass);
+            label.textContent = newText;
+
+            label.classList.add(enterClass);
+
+            const onEnterEnd = () => {
+                label.classList.remove(enterClass);
+                labelAnimationCleanup = null;
+            };
+
+            label.addEventListener('animationend', onEnterEnd, { once: true });
+        };
+
+        label.addEventListener('animationend', onExitEnd, { once: true });
+
+        labelAnimationCleanup = () => {
+            label.removeEventListener('animationend', onExitEnd);
+            label.classList.remove(exitClass, enterClass);
+            label.textContent = newText;  
+        };
+    }
+
+    function openMenu() {
+        panel.classList.add('is-open');
+        panel.removeAttribute('aria-hidden');
+        menuButton.classList.add('open');
+        menuButton.setAttribute('aria-expanded', 'true');
+        document.body.style.overflow = 'hidden';
+
+        const label = document.getElementById('menu-label') as HTMLElement;
+        animateLabel(label, 'slide-up', 'slide-from-bottom', 'Close');
+    }
+
+    function closeMenu() {
+        panel.classList.remove('is-open');
+        panel.setAttribute('aria-hidden', 'true');
+        menuButton.classList.remove('open');
+        menuButton.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+
+        const label = document.getElementById('menu-label') as HTMLElement;
+        animateLabel(label, 'slide-down', 'slide-from-top', 'Menu');
+    }
+
+    function alignPanel() {
+        const btnRect = menuButton.getBoundingClientRect();
+        
+        const distanceFromRight = window.innerWidth - btnRect.right;
+        
+        panel.style.right = `${distanceFromRight}px`;
+        
+        panel.style.left = 'auto'; 
+    }
+    if (panel) {
+        alignPanel();
+        window.addEventListener('resize', alignPanel);
+    }
+
+
+    menuButton?.addEventListener('click', () => {
+        menuButton.classList.contains('open') ? closeMenu() : openMenu();
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeMenu();
+    });
+
+    panel?.querySelectorAll('.drop-link').forEach(link => {
+        link.addEventListener('click', closeMenu);
+    });
+
+    document.addEventListener('click', (e) => {
+        if (
+            menuButton.classList.contains('open') &&
+            !panel.contains(e.target as Node) &&
+            !menuButton.contains(e.target as Node)
+        ) {
+            closeMenu();
+        }
+    });
+</script>

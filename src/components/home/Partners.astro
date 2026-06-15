@@ -1,0 +1,177 @@
+---
+import medtronic from '../../assets/partners/medtronic.webp';
+import beurer from '../../assets/partners/beurer.webp';
+import newline from '../../assets/partners/newline.webp';
+import m from '../../assets/partners/3M.webp';
+import mimio from '../../assets/partners/mimio.webp';
+import acer from '../../assets/partners/acer.webp';
+import aver from '../../assets/partners/aver.webp';
+import dell from '../../assets/partners/dell.webp';
+import lg from '../../assets/partners/lg.webp';
+import fortinet from '../../assets/partners/fortinet.webp';
+import samsung from '../../assets/partners/samsung.webp';
+import sony from '../../assets/partners/sony.webp';
+import cisco from '../../assets/partners/cisco.webp';
+import fujirebio from '../../assets/partners/fujirebio.webp';
+
+const partners = [
+  { src: medtronic, alt: 'Medtronic' },
+  { src: beurer,    alt: 'Beurer' },
+  { src: newline,   alt: 'Newline' },
+  { src: m,         alt: '3M' },
+  { src: mimio,     alt: 'Mimio' },
+  { src: acer,      alt: 'Acer' },
+  { src: aver,      alt: 'Aver' },
+  { src: dell,      alt: 'Dell' },
+  { src: lg,        alt: 'LG' },
+  { src: fortinet,  alt: 'Fortinet' },
+  { src: samsung,   alt: 'Samsung' },
+  { src: sony,      alt: 'Sony' },
+  { src: cisco,     alt: 'Cisco' },
+  { src: fujirebio, alt: 'Fujirebio' },
+];
+---
+
+<section class="partners">
+    <div class="partners__header">
+        <span class="partners__label">ĐỐI TÁC</span>
+        <a href="/doi-tac" class="partners__more">XEM TẤT CẢ</a>
+    </div>
+
+    <div class="partners__marquee-outer">
+        <div class="partners__marquee-track">
+        <ul class="partners__list">
+            {partners.map((p) => (
+            <li class="partners__item">
+                <img src={p.src.src} alt={p.alt} width="140" height="60" loading="lazy" decoding="async" />
+            </li>
+            ))}
+        </ul>
+        <ul class="partners__list" aria-hidden="true">
+            {partners.map((p) => (
+            <li class="partners__item">
+                <img src={p.src.src} alt="" width="140" height="60" loading="lazy" decoding="async" />
+            </li>
+            ))}
+        </ul>
+        </div>
+    </div>
+</section>
+
+<style>
+    .partners {
+        background: #e8e4de;
+        padding: 80px 40px 120px;
+        user-select: none;
+    }
+
+ 
+    .partners__header {
+        font-family: var(--font-family-display);
+        font-weight: var(--font-weight-semibold);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 56px;
+    }
+
+    .partners__label {
+        font-size: 20px;
+        color: black;
+    }
+
+    .partners__more {
+        font-size: 20px;
+        color: #1a1714;
+        text-decoration: none;
+        padding-bottom: 4px;
+        background-image: linear-gradient(#1a1714, #1a1714);
+        background-position: 50% 100%;
+        background-repeat: no-repeat;
+        background-size: 100% 1.5px;
+        transition: background-size 0.4s ease;
+    }
+
+    .partners__more:hover {
+        background-size: 0% 1.5px;
+    }
+
+    /* ── Marquee ── */
+    .partners__marquee-outer {
+        overflow: hidden;
+        -webkit-mask-image: linear-gradient(
+        to right,
+        transparent 0%,
+        black 6%,
+        black 94%,
+        transparent 100%
+        );
+        mask-image: linear-gradient(
+        to right,
+        transparent 0%,
+        black 6%,
+        black 94%,
+        transparent 100%
+        );
+    }
+
+    .partners__marquee-track {
+        display: flex;
+        width: max-content;
+    }
+
+    .partners__list {
+        display: flex;
+        align-items: center;
+        list-style: none;
+        margin: 0;
+        padding: 0 40px;
+        gap: 72px;
+    }
+
+    .partners__item {
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 160px;
+        height: 80px;
+    }
+
+    .partners__item img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        filter: grayscale(30%) opacity(0.75);
+        transition: filter 0.3s ease;
+    }
+
+    .partners__item img:hover {
+        filter: grayscale(0%) opacity(1);
+    }
+
+    :global(@keyframes marquee) {
+        from { transform: translateX(0); }
+        to   { transform: translateX(-50%); }
+    }
+    @keyframes marquee {
+        from { transform: translateX(0); }
+        to   { transform: translateX(-50%); }
+    }
+    .partners__marquee-track {
+        animation: marquee 30s linear infinite;
+    }
+    @media (max-width: 768px) {
+        .partners {
+        padding: 60px 20px 80px;
+        }
+        .partners__list {
+        gap: 40px;
+        }
+        .partners__item img {
+        width: 100px;
+        height: 44px;
+        }
+    }
+</style>

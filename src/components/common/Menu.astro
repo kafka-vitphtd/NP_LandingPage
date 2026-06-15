@@ -1,0 +1,97 @@
+---
+const { NavigationLinks } = Astro.props;
+---
+
+<nav class="menu-dropdown" id="menu-dropdown" aria-hidden="true" aria-label="Main Navigation">
+    <ul class="menu-dropdown__list">
+        {NavigationLinks.map((link: { href: string; label: string }, i: number) => (
+        <li>
+            <a href={link.href} class="menu-dropdown__link" style={`--i:${i}`}>
+            {link.label}
+            </a>
+        </li>
+        ))}
+    </ul>
+</nav>
+
+<style> 
+    .menu-dropdown {
+        position: fixed;
+        top: 110px;
+        right: 0;
+        z-index: 210;
+        width: auto;
+        background: white;
+        padding: 50px 90px 70px 50px;
+        /* Giấu menu bằng cách "cắt" từ dưới lên trên */
+        clip-path: inset(0 0 100% 0);
+        transition: clip-path 0.55s cubic-bezier(0.76, 0, 0.24, 1);
+        pointer-events: none; /* Tránh click nhầm khi menu đang ẩn */
+    }
+
+    .menu-dropdown.is-open {
+        /* Mở menu bằng cách bỏ "cắt" */
+        clip-path: inset(0 0 0% 0);
+        pointer-events: auto;
+    }
+
+    .menu-dropdown__list {
+        list-style: none;
+        margin: 0; 
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .menu-dropdown__link {
+        display: block;
+        font-family: var(--font-family-display, serif);
+        font-size: 32px;
+        font-weight: 500;
+        color: black;
+        text-decoration: none;
+        padding: 14px 0;
+        border-bottom: 1px solid rgba(42,38,32,0.18);
+        position: relative;
+        overflow: hidden;
+        /* Trạng thái ban đầu: mờ, tụt xuống dưới và bị nhòe (blur) */
+        opacity: 0;
+        transform: translateY(24px) scale(0.98);
+        filter: blur(8px);
+        transition: 
+            opacity 0.25s ease, 
+            transform 0.25s ease, 
+            filter 0.25s ease;
+    }
+
+    .menu-dropdown.is-open .menu-dropdown__link {
+        /* Trạng thái khi mở: rõ nét, về đúng vị trí */
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+        /* Tuyệt chiêu hiệu ứng bậc thang (staggered animation) dùng biến --i */
+        transition:
+            opacity 0.4s ease calc(var(--i) * 0.08s + 0.2s),
+            transform 0.5s cubic-bezier(0.25, 1, 0.5, 1) calc(var(--i) * 0.08s + 0.2s),
+            filter 0.5s ease calc(var(--i) * 0.08s + 0.2s);
+    }
+
+    /* Hiệu ứng gạch chân chạy từ trái sang phải */
+    .menu-dropdown__link::after {
+        content: '';
+        position: absolute;
+        bottom: -1px; left: 0;
+        width: 0; height: 2px;
+        background: black;
+        transition: width 0.35s cubic-bezier(0.76,0,0.24,1);
+    }
+
+    .menu-dropdown__link:hover::after { 
+        width: 100%; 
+    }
+
+    /* Giữ nguyên gạch chân cho trang hiện tại đang đứng */
+    .menu-dropdown__link[aria-current="page"]::after {
+        width: 100%;
+    }
+</style>

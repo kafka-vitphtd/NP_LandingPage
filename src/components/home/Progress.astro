@@ -1,0 +1,265 @@
+---
+const steps = [
+    {
+        id: "01",
+        title: "Tư vấn",
+        desc: "Chúng tôi lắng nghe và phân tích nhu cầu thực tế của từng khách hàng — từ quy mô dự án, ngân sách đến yêu cầu kỹ thuật — để đề xuất giải pháp phù hợp nhất.",
+        tags: ["Khảo sát thực tế", "Phân tích nhu cầu", "Tư vấn miễn phí"],
+    },
+    {
+        id: "02",
+        title: "Thiết kế giải pháp",
+        desc: "Đội ngũ kỹ thuật xây dựng phương án tổng thể, lựa chọn thiết bị và công nghệ phù hợp, đảm bảo tính đồng bộ và hiệu quả lâu dài cho toàn hệ thống.",
+        tags: ["Thiết kế hệ thống", "Lựa chọn thiết bị", "Dự toán chi tiết"],
+    },
+    {
+        id: "03",
+        title: "Triển khai",
+        desc: "MBA trực tiếp thi công, lắp đặt và cấu hình toàn bộ hệ thống theo đúng tiến độ cam kết — với đội ngũ kỹ thuật viên giàu kinh nghiệm, được đào tạo bài bản.",
+        tags: ["Lắp đặt chuyên nghiệp", "Đúng tiến độ", "Kiểm thử nghiệm thu"],
+    },
+    {
+        id: "04",
+        title: "Bảo trì hậu mãi",
+        desc: "Sau bàn giao, MBA tiếp tục đồng hành qua dịch vụ bảo hành, bảo trì định kỳ và hỗ trợ kỹ thuật — đảm bảo hệ thống vận hành ổn định trong suốt vòng đời sản phẩm.",
+        tags: ["Bảo hành chính hãng", "Bảo trì định kỳ", "Hỗ trợ 24/7"],
+    },
+]
+---
+
+<section class="how" id="how-we-work">
+
+    <div class="how__header">
+        <span class="how__label">QUY TRÌNH</span>
+    </div>
+
+    <div class="how__steps">
+        {steps.map((step) => (
+            <div class="how__step" data-id={step.id}>
+
+                <!-- Collapsed row: luôn hiển thị -->
+                <div class="how__row">
+                    <span class="how__num">/{step.id}</span>
+                    <h3 class="how__title">{step.title}</h3>
+                </div>
+
+                <!-- Expanded content: hiện khi hover -->
+                <div class="how__expanded">
+                    <div class="how__expanded-inner">
+                        <div class="how__expanded-text">
+                            <p class="how__step-label">/{step.id}/ {step.title.toUpperCase()}</p>
+                            <p class="how__desc">{step.desc}</p>
+                            <ul class="how__tags">
+                                {step.tags.map(tag => (
+                                    <li class="how__tag">{tag}</li>
+                                ))}
+                            </ul>
+                        </div>
+                        <div class="how__expanded-images">
+                            <!-- Thay bằng <img> khi có ảnh thật -->
+                            <div class="how__img-placeholder"></div>
+                            <div class="how__img-placeholder"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        ))}
+    </div>
+
+</section>
+
+<style>
+    .how {
+        background: #e8e4de;
+        padding: 80px 40px 120px;
+        user-select: none;
+    }
+
+    .how__header {
+        font-family: var(--font-family-display);
+        font-weight: var(--font-weight-semibold);
+        font-size: 20px;
+        color: #1a1714;
+        margin-bottom: 40px;
+    }
+
+    /* Steps */
+    .how__steps {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .how__step {
+        border-top: 1px solid rgba(26, 23, 20, 0.15);
+        overflow: hidden;
+        cursor: default;
+    }
+
+    .how__step:last-child {
+        border-bottom: 1px solid rgba(26, 23, 20, 0.15);
+    }
+
+    /* Collapsed row */
+    .how__row {
+        display: flex;
+        align-items: baseline;
+        gap: 40px;
+        padding: 28px 0;
+        transition: padding 0.4s ease;
+    }
+
+    .how__step:hover .how__row {
+        padding: 28px 0 12px;
+    }
+
+    .how__num {
+        font-family: var(--font-family-display);
+        font-size: 13px;
+        font-weight: 600;
+        color: rgba(26, 23, 20, 0.4);
+        letter-spacing: 0.04em;
+        min-width: 36px;
+        flex-shrink: 0;
+    }
+
+    .how__title {
+        font-family: var(--font-family-display);
+        font-size: clamp(32px, 5vw, 72px);
+        font-weight: 400;
+        color: #1a1714;
+        line-height: 1.05;
+        letter-spacing: -0.02em;
+        margin: 0;
+        transition: letter-spacing 0.4s ease, opacity 0.3s ease;
+    }
+
+    /* Mờ các step không hover */
+    .how__steps:has(.how__step:hover) .how__step:not(:hover) .how__title {
+        opacity: 0.25;
+    }
+
+    /* Expanded */
+    .how__expanded {
+        display: grid;
+        grid-template-rows: 0fr;
+        transition: grid-template-rows 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .how__step:hover .how__expanded {
+        grid-template-rows: 1fr;
+    }
+
+    .how__expanded-inner {
+        overflow: hidden;
+        display: grid;
+        grid-template-columns: 380px 1fr;
+        gap: 40px;
+        align-items: start;
+        padding-bottom: 0;
+        transition: padding-bottom 0.4s ease;
+    }
+
+    .how__step:hover .how__expanded-inner {
+        padding-bottom: 36px;
+    }
+
+    .how__step-label {
+        font-family: var(--font-family-display);
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: rgba(26, 23, 20, 0.4);
+        margin: 0 0 14px;
+    }
+
+    .how__desc {
+        font-family: var(--font-family-body);
+        font-size: clamp(13px, 1.1vw, 15px);
+        color: rgba(26, 23, 20, 0.6);
+        line-height: 1.72;
+        margin: 0 0 20px;
+    }
+
+    .how__tags {
+        list-style: none;
+        padding: 0; margin: 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .how__tag {
+        font-family: var(--font-family-display);
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: rgba(26, 23, 20, 0.5);
+        border: 1px solid rgba(26, 23, 20, 0.2);
+        padding: 5px 12px;
+        border-radius: 2px;
+    }
+
+    /* Images */
+    .how__expanded-images {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        height: 180px;
+    }
+
+    .how__img-placeholder {
+        background: rgba(26, 23, 20, 0.1);
+        border-radius: 4px;
+        width: 100%;
+        height: 100%;
+        /* Khi có ảnh thật: xóa div này, dùng <img> với object-fit: cover */
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .how { padding: 60px 24px 80px; }
+
+        .how__expanded-inner {
+            grid-template-columns: 1fr;
+        }
+
+        .how__expanded-images {
+            height: 140px;
+        }
+    }
+</style>
+
+<script>
+    // Không cần JS — interaction hoàn toàn bằng CSS :hover
+    // Chỉ dùng JS nếu muốn hỗ trợ touch (mobile)
+    const steps = document.querySelectorAll('.how__step');
+
+    steps.forEach(step => {
+        step.addEventListener('touchstart', () => {
+            const isActive = step.classList.contains('is-touch-active');
+            steps.forEach(s => s.classList.remove('is-touch-active'));
+            if (!isActive) step.classList.add('is-touch-active');
+        }, { passive: true });
+    });
+</script>
+
+<style>
+    /* Touch fallback cho mobile */
+    @media (hover: none) {
+        .how__steps:has(.how__step.is-touch-active) .how__step:not(.is-touch-active) .how__title {
+            opacity: 0.25;
+        }
+        .how__step.is-touch-active .how__expanded {
+            grid-template-rows: 1fr;
+        }
+        .how__step.is-touch-active .how__row {
+            padding: 28px 0 12px;
+        }
+        .how__step.is-touch-active .how__expanded-inner {
+            padding-bottom: 36px;
+        }
+    }
+</style>

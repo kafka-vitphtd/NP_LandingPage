@@ -1,0 +1,17 @@
+--- 
+import Navbar from './Navbar.astro'
+import Menu from './Menu.astro'
+
+const MyNavigationLinks = [
+  { href: '/',           label: 'Trang chủ' },
+  { href: '/about',      label: 'Về chúng tôi' },
+  { href: '/projects',   label: 'Các dự án' },
+  { href: '/customers',  label: 'Khách hàng và đối tác' },
+  { href: '/investors',  label: 'Quan hệ cổ đông' },
+  { href: '/esg',        label: 'ESG' },
+  { href: '/news',       label: 'Tin tức' },
+];
+---
+
+<Navbar />
+<Menu NavigationLinks={MyNavigationLinks} /> 
